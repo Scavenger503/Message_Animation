@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Best Friend</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    .interface-container {
+      display: flex;
+      gap: 0px;
+    }
+    .iphone {
+      width: 414px;
+      height: 736px;
+      background: #fff;
+      border-radius: 60px;
+      box-shadow: 0 0 40px #00ffe7;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      border: 16px solid #000;
+    }
+    .status-bar {
+      height: 26px;
+      padding: 4px 16px;
+      font-size: 12px;
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+    .status-bar .left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .status-bar .dots {
+      font-size: 16px;
+      letter-spacing: 2px;
+    }
+    .status-bar .right-time {
+      position: absolute;
+      right: 16px;
+      font-size: 14px;
+    }
+    .chat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      border-bottom: 1px solid #ccc;
+      font-weight: 600;
+      position: relative;
+    }
+    .chat-header .back {
+      position: absolute;
+      left: 16px;
+      font-size: 22px;
+    }
+    .chat-header .name {
+      margin: 0 auto;
+      font-size: 16px;
+    }
+    .chat-header .facetime {
+      width: 24px;
+      height: 24px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/8/83/FaceTime_Logo.svg') no-repeat center;
+      background-size: contain;
+    }
+    .chat-body {
+      flex: 1;
+      padding: 12px;
+      background: #f2f2f7;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .bubble {
+      max-width: 75%;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      border-radius: 20px;
+      font-size: 14px;
+      line-height: 1.4;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      display: none;
+    }
+    .you {
+      background: #e5e5ea;
+      color: #000;
+      align-self: flex-start;
+    }
+    .them {
+      background: #007aff;
+      color: #fff;
+      align-self: flex-end;
+    }
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-right: 8px;
+      object-fit: cover;
+    }
+    .bubble-content {
+      display: flex;
+      flex-direction: column;
+    }
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-top: 1px solid #ccc;
+    }
+    .plus {
+      font-size: 20px;
+      color: #888;
+      margin-right: 12px;
+    }
+    .input-bar {
+      background: #ccc;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      color: #333;
+      flex: 1;
+      max-width: 160px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .input-bar .cursor {
+      display: inline-block;
+      margin-left: 4px;
+      width: 2px;
+      height: 14px;
+      background: #555;
+      animation: blink 1s steps(1) infinite;
+    }
+    .wave {
+      width: 24px;
+      height: 24px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/4/4f/Ios_voice_waveform_icon.png') no-repeat center;
+      background-size: contain;
+      margin-left: 10px;
+    }
+    .encryption-panel {
+      width: 414px;
+      height: 736px;
+      background: #1c1c1c;
+      color: #00ff99;
+      font-size: 12px;
+      font-family: monospace;
+      border-radius: 60px;
+      padding: 16px;
+      box-shadow: 0 0 40px #00ffe7;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      border: 16px solid #000;
+    }
+    .log-line {
+      opacity: 0;
+      animation: fadeIn 0.4s ease forwards;
+      margin-bottom: 4px;
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      50.01%, 100% { opacity: 0; }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="interface-container">
+    <div class="iphone">
+      <div class="status-bar">
+        <div class="left">
+          <div class="dots">●●●</div>
+          <div>T-Mobile</div>
+        </div>
+        <div class="right-time">2:04</div>
+      </div>
+      <div class="chat-header">
+        <div class="back">&#x276E;</div>
+        <div class="name">Best Friend</div>
+        <div class="facetime"></div>
+      </div>
+      <div class="chat-body" id="chat">
+        <div class="bubble you"><img src="https://randomuser.me/api/portraits/men/32.jpg" class="avatar" /><div class="bubble-content">Hey! Did you watch that episode last night?</div></div>
+        <div class="bubble them"><div class="bubble-content">Omg yes, I was not ready for that ending 😭</div></div>
+        <div class="bubble you"><img src="https://randomuser.me/api/portraits/men/32.jpg" class="avatar" /><div class="bubble-content">Right?! I had to pause and rewind 😂</div></div>
+        <div class="bubble them"><div class="bubble-content">Honestly, we need to rewatch together 🍿</div></div>
+        <div class="bubble you"><img src="https://randomuser.me/api/portraits/men/32.jpg" class="avatar" /><div class="bubble-content">I'm down! Snacks on me this time 😎</div></div>
+        <div class="bubble them"><div class="bubble-content">Bet! I’ll bring drinks 🥤</div></div>
+        <div class="bubble them"><div class="bubble-content">Be there soon 🚗</div></div>
+      </div>
+      <div class="footer">
+        <div class="plus">+</div>
+        <div class="input-bar">iMessage<span class="cursor"></span></div>
+        <div class="wave"></div>
+      </div>
+    </div>
+    <div class="encryption-panel" id="log"></div>
+  </div>
+  <script>
+    const chatBubbles = document.querySelectorAll('.chat-body .bubble');
+    const encryptionPanel = document.getElementById('log');
+    let delay = 500;
+    chatBubbles.forEach((bubble) => {
+      setTimeout(() => {
+        bubble.style.display = 'flex';
+        if (bubble.classList.contains('them')) {
+          logEncryptionSequence();
+        }
+      }, delay);
+      delay += 1600;
+    });
+
+    function logEncryptionSequence() {
+  const steps = [
+    '📤 [Sender] Preparing plaintext message...',
+    '🔑 [Sender] Generating ephemeral Curve25519 key pair...',
+    '🔐 [Sender] Encrypting message with recipient\'s public key (X25519)...',
+    '🔏 [Sender] Signing message with Ed25519 private key for integrity...',
+    '🔄 [Sender] Wrapping message with AES-GCM symmetric encryption...',
+    '📦 [Sender] Packaging message into APNs payload...',
+    '📡 [Network] Transmitting message through Apple Push Notification Service...',
+    '📥 [Recipient] Receiving payload and verifying signature...',
+    '🔓 [Recipient] Decrypting AES-GCM layer using shared key...',
+    '✅ [Recipient] Validating sender\'s identity via Ed25519...',
+    '💬 [UI] Displaying decrypted message in iMessage.'
+  ];
+  steps.forEach((text, i) => {
+    setTimeout(() => {
+      const logLine = document.createElement('div');
+      logLine.className = 'log-line';
+      logLine.textContent = text;
+      encryptionPanel.appendChild(logLine);
+      encryptionPanel.scrollTop = encryptionPanel.scrollHeight;
+    }, i * 600);
+  });
+}
+  </script>
+</body>
+</html>
