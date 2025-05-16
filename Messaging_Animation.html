@@ -236,29 +236,59 @@
     });
 
     function logEncryptionSequence() {
-  const steps = [
-    '📤 [Sender] Preparing plaintext message...',
-    '🔑 [Sender] Generating ephemeral Curve25519 key pair...',
-    '🔐 [Sender] Encrypting message with recipient\'s public key (X25519)...',
-    '🔏 [Sender] Signing message with Ed25519 private key for integrity...',
-    '🔄 [Sender] Wrapping message with AES-GCM symmetric encryption...',
-    '📦 [Sender] Packaging message into APNs payload...',
-    '📡 [Network] Transmitting message through Apple Push Notification Service...',
-    '📥 [Recipient] Receiving payload and verifying signature...',
-    '🔓 [Recipient] Decrypting AES-GCM layer using shared key...',
-    '✅ [Recipient] Validating sender\'s identity via Ed25519...',
-    '💬 [UI] Displaying decrypted message in iMessage.'
-  ];
-  steps.forEach((text, i) => {
-    setTimeout(() => {
-      const logLine = document.createElement('div');
-      logLine.className = 'log-line';
-      logLine.textContent = text;
-      encryptionPanel.appendChild(logLine);
-      encryptionPanel.scrollTop = encryptionPanel.scrollHeight;
-    }, i * 600);
-  });
-}
+      const steps = [
+        '📤 [Sender] Preparing plaintext message...',
+        '🔑 [Sender] Generating ephemeral Curve25519 key pair...',
+        '🔐 [Sender] Encrypting message with recipient\'s public key (X25519)...',
+        '🔏 [Sender] Signing message with Ed25519 private key for integrity...',
+        '🔄 [Sender] Wrapping message with AES-GCM symmetric encryption...',
+        '📦 [Sender] Packaging message into APNs payload...',
+        '📡 [Network] Transmitting message through Apple Push Notification Service...',
+        '📥 [Recipient] Receiving payload and verifying signature...',
+        '🔓 [Recipient] Decrypting AES-GCM layer using shared key...',
+        '✅ [Recipient] Validating sender\'s identity via Ed25519...',
+        '💬 [UI] Displaying decrypted message in iMessage.'
+      ];
+      steps.forEach((text, i) => {
+        setTimeout(() => {
+          const logLine = document.createElement('div');
+          logLine.className = 'log-line';
+          logLine.textContent = text;
+          encryptionPanel.appendChild(logLine);
+          encryptionPanel.scrollTop = encryptionPanel.scrollHeight;
+        }, i * 600);
+      });
+    }
+  </script>
+
+  <!-- 🔁 LOOP SCRIPT (added below your original) -->
+  <script>
+    const totalChatDelay = 500 + (chatBubbles.length * 1600);
+    const totalEncryptionDelay = 11 * 600;
+    const loopDelay = totalChatDelay + totalEncryptionDelay + 1000;
+
+    setTimeout(function loop() {
+      // Reset chat bubbles
+      chatBubbles.forEach(b => b.style.display = 'none');
+      // Clear encryption logs
+      encryptionPanel.innerHTML = '';
+
+      // Replay animation
+      let delay = 500;
+      chatBubbles.forEach((bubble) => {
+        setTimeout(() => {
+          bubble.style.display = 'flex';
+          if (bubble.classList.contains('them')) {
+            logEncryptionSequence();
+          }
+        }, delay);
+        delay += 1600;
+      });
+
+      // Repeat again after this round
+      setTimeout(loop, loopDelay);
+    }, loopDelay);
   </script>
 </body>
 </html>
+
